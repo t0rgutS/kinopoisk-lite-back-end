@@ -1,4 +1,4 @@
-package com.mirea.movieguide.model;
+package ru.mirea.movieguide.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +14,8 @@ import java.util.UUID;
 public class Movie {
     @Id
     // @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "movie_uuid")
-    private String uuid;
+    @Column(name = "movie_id")
+    private String id;
 
     @Column
     @NotNull
@@ -43,11 +43,11 @@ public class Movie {
     private Photo photo;
 
     public Movie() {
-        uuid = UUID.randomUUID().toString();
+        id = UUID.randomUUID().toString();
     }
 
     public Movie(String uuid) {
-        this.uuid = uuid;
+        this.id = uuid;
     }
 
 }

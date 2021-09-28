@@ -1,4 +1,4 @@
-package com.mirea.movieguide.exception;
+package ru.mirea.movieguide.exception;
 
 public class NotEnoughArgsException extends PersistenceException {
     public NotEnoughArgsException(String message) {

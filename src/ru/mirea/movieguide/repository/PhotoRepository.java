@@ -1,7 +1,8 @@
-package com.mirea.movieguide.repository;
+package ru.mirea.movieguide.repository;
 
-import com.mirea.movieguide.model.Photo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import ru.mirea.movieguide.model.Photo;
+
 
 public interface PhotoRepository extends JpaRepository<Photo, String> {
     Photo findByPhotoUri(String photoUri);

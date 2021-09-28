@@ -1,4 +1,4 @@
-package com.mirea.movieguide.exception;
+package ru.mirea.movieguide.exception;
 
 public class PersistenceException extends Exception {
     public PersistenceException(String message) {

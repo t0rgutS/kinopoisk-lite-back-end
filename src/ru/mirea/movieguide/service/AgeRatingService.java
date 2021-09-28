@@ -1,15 +1,13 @@
-package com.mirea.movieguide.service;
+package ru.mirea.movieguide.service;
 
-import com.mirea.movieguide.exception.NotFoundException;
-import com.mirea.movieguide.exception.PersistenceException;
-import com.mirea.movieguide.model.AgeRating;
-import com.mirea.movieguide.repository.AgeRatingRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import ru.mirea.movieguide.exception.NotFoundException;
+import ru.mirea.movieguide.exception.PersistenceException;
+import ru.mirea.movieguide.model.AgeRating;
+import ru.mirea.movieguide.repository.AgeRatingRepository;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
 public class AgeRatingService {
     private final AgeRatingRepository ageRatingRepo;

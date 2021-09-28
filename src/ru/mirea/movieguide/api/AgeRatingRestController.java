@@ -1,7 +1,7 @@
-package com.mirea.movieguide.api;
+package ru.mirea.movieguide.api;
 
-import com.mirea.movieguide.exception.NotFoundException;
-import com.mirea.movieguide.service.AgeRatingService;
+import ru.mirea.movieguide.exception.NotFoundException;
+import ru.mirea.movieguide.service.AgeRatingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

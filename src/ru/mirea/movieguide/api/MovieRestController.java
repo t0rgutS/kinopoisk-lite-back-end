@@ -1,11 +1,12 @@
-package com.mirea.movieguide.api;
+package ru.mirea.movieguide.api;
 
-import com.mirea.movieguide.exception.NotFoundException;
-import com.mirea.movieguide.exception.PersistenceException;
-import com.mirea.movieguide.service.MovieService;
+import ru.mirea.movieguide.exception.NotFoundException;
+import ru.mirea.movieguide.exception.PersistenceException;
+import ru.mirea.movieguide.service.MovieService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -51,6 +52,7 @@ public class MovieRestController {
 
     @PostMapping
     @PutMapping
+    @Secured("ADMIN")
     public ResponseEntity<Map> upsertMovie(@RequestBody Map<String, String> request) {
         Map<String, Object> result = new HashMap<>();
         try {

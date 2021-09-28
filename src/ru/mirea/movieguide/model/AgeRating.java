@@ -1,10 +1,11 @@
-package com.mirea.movieguide.model;
+package ru.mirea.movieguide.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -15,8 +16,8 @@ import java.util.UUID;
 public class AgeRating {
     @Id
    // @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "age_rating_uuid")
-    private String uuid;
+    @Column(name = "age_rating_id")
+    private String id;
 
     @Column(name = "rating_category")
     @NotNull(message = "Укажите возрастной рейтинг!")
@@ -29,7 +30,7 @@ public class AgeRating {
     private Integer minAge;
 
     public AgeRating() {
-        uuid = UUID.randomUUID().toString();
+        id = UUID.randomUUID().toString();
     }
 
 }

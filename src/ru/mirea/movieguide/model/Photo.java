@@ -1,10 +1,12 @@
-package com.mirea.movieguide.model;
+package ru.mirea.movieguide.model;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -16,8 +18,8 @@ import java.util.UUID;
 public class Photo {
     @Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "photo_uuid")
-    private String uuid;
+    @Column(name = "photo_id")
+    private String id;
 
     @Column(name = "photo_uri")
     @NotNull
@@ -28,6 +30,6 @@ public class Photo {
     private byte[] photoContent;
 
     public Photo() {
-        uuid = UUID.randomUUID().toString();
+        id = UUID.randomUUID().toString();
     }
 }

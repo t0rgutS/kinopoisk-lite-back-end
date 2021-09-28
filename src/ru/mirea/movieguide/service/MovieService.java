@@ -1,20 +1,19 @@
-package com.mirea.movieguide.service;
+package ru.mirea.movieguide.service;
 
-import com.mirea.movieguide.exception.NotEnoughArgsException;
-import com.mirea.movieguide.exception.NotFoundException;
-import com.mirea.movieguide.exception.PersistenceException;
-import com.mirea.movieguide.model.AgeRating;
-import com.mirea.movieguide.model.Movie;
-import com.mirea.movieguide.repository.AgeRatingRepository;
-import com.mirea.movieguide.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import org.springframework.security.access.annotation.Secured;
+import ru.mirea.movieguide.exception.NotEnoughArgsException;
+import ru.mirea.movieguide.exception.NotFoundException;
+import ru.mirea.movieguide.exception.PersistenceException;
+import ru.mirea.movieguide.model.AgeRating;
+import ru.mirea.movieguide.model.Movie;
+import ru.mirea.movieguide.repository.AgeRatingRepository;
+import ru.mirea.movieguide.repository.MovieRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Map;
 
-@Service
 @RequiredArgsConstructor
 public class MovieService {
     private final MovieRepository movieRepo;
@@ -29,7 +28,7 @@ public class MovieService {
                 new NotFoundException("Фильм с идентификатором " + id + " не найден!"));
     }
 
-
+    @Secured("ADMIN")
     public Movie upsert(Map<String, String> request) throws PersistenceException {
         Movie movie;
         if (request.containsKey("id")) {
