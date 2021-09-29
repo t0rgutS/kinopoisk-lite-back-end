@@ -3,10 +3,7 @@ package ru.mirea.movieguide.model;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -14,6 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Entity
 @Table(name = "photos")
 public class Photo {
     @Id

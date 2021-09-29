@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Entity
 @Table(name = "movies")
 public class Movie {
     @Id
@@ -39,7 +40,7 @@ public class Movie {
     private AgeRating ageRating;
 
     @JoinColumn(name = "cover_id")
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Photo photo;
 
     public Movie() {

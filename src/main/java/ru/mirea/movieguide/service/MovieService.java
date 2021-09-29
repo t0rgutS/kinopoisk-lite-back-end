@@ -2,6 +2,7 @@ package ru.mirea.movieguide.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Component;
 import ru.mirea.movieguide.exception.NotEnoughArgsException;
 import ru.mirea.movieguide.exception.NotFoundException;
 import ru.mirea.movieguide.exception.PersistenceException;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RequiredArgsConstructor
+@Component
 public class MovieService {
     private final MovieRepository movieRepo;
     private final AgeRatingRepository ageRatingRepo;

@@ -3,6 +3,7 @@ package ru.mirea.movieguide.api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import ru.mirea.movieguide.model.User;
 import ru.mirea.movieguide.security.JWTProvider;
 import ru.mirea.movieguide.service.UserService;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,11 +24,22 @@ public class AuthController {
     private final JWTProvider jwtProvider;
     private final UserService userService;
 
+    @Resource(name = "passwordEncoder")
+    private BCryptPasswordEncoder passwordEncoder;
+
     @PostMapping
     public ResponseEntity<Map> getToken(@RequestBody Map<String, String> request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            User user = userService.findUser(request.get("username"), request.get("password"));
+            if(!request.containsKey("username") || !request.containsKey("password")) {
+                result.put("error", "Обязательные параметры username и password отсутствуют!");
+                return new ResponseEntity<Map>(result, HttpStatus.BAD_REQUEST);
+            }
+            User user = userService.findUserByUsername(request.get("username"));
+            if(!passwordEncoder.matches(request.get("password"), user.getPassword())) {
+                result.put("error", "Неверный пароль!");
+                return new ResponseEntity<Map>(result, HttpStatus.BAD_REQUEST);
+            }
             String token = jwtProvider.generateToken(user.getId());
             String refreshToken = userService.setRefreshToken(user, false);
             result.put("tokenType", "Bearer");
@@ -46,10 +59,14 @@ public class AuthController {
     }
 
     @PostMapping(value = "/refresh")
-    public ResponseEntity<Map> refreshToken(@RequestBody String refreshToken) {
+    public ResponseEntity<Map> refreshToken(@RequestBody Map<String, String> request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            User user = userService.findTokenOwner(refreshToken);
+            if(!request.containsKey("refreshToken")) {
+                result.put("error", "Укажите refresh token!");
+                return new ResponseEntity<Map>(result, HttpStatus.BAD_REQUEST);
+            }
+            User user = userService.findTokenOwner(request.get("refreshToken"));
             if (user.getRefreshToken() == null) {
                 result.put("error", "No refresh token!");
                 return new ResponseEntity<Map>(result, HttpStatus.BAD_REQUEST);

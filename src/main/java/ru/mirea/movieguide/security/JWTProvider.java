@@ -3,6 +3,7 @@ package ru.mirea.movieguide.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -11,6 +12,7 @@ import java.util.Date;
 
 @Component
 public class JWTProvider {
+    @Value("$(jwt.secret)")
     private String key;
 
     public String generateToken(String userId) {

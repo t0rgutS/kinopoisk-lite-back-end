@@ -1,5 +1,6 @@
 package ru.mirea.movieguide.api;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import ru.mirea.movieguide.exception.NotFoundException;
 import ru.mirea.movieguide.exception.PersistenceException;
 import ru.mirea.movieguide.service.MovieService;
@@ -50,9 +51,8 @@ public class MovieRestController {
         return new ResponseEntity<Map>(result, HttpStatus.OK);
     }
 
-    @PostMapping
-    @PutMapping
-    @Secured("ADMIN")
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.PUT})
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Map> upsertMovie(@RequestBody Map<String, String> request) {
         Map<String, Object> result = new HashMap<>();
         try {

@@ -1,0 +1,11 @@
+spring:
+ datasource:
+  url: jdbc:postgresql://localhost/KinopoiskLite_Base
+  username: putur
+  password: fxaPaMz4RMsYghZF
+ jpa:
+  generate-ddl: true
+  hibernate:
+   ddl-auto: update
+jwt:
+ secret: f7JBW4ukc4HTqa9L

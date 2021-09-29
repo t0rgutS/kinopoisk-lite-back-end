@@ -18,6 +18,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -34,10 +35,12 @@ public class JWTFilter extends GenericFilterBean {
                 String token = authHeader.substring(7);
                 if (provider.validateToken(token)) {
                     try {
-                        User user = userService.findUser(provider.getUserId(token));
+                        User user = userService.findUserById(provider.getUserId(token));
                         UsernamePasswordAuthenticationToken authToken
                                 = new UsernamePasswordAuthenticationToken(user, null,
-                                Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getRole())));
+                                user.getRoles().stream().map(role ->
+                                        new SimpleGrantedAuthority("ROLE_" + role.getRole())).collect(Collectors.toList())
+                        );
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     } catch (PersistenceException e) {
                         e.printStackTrace();

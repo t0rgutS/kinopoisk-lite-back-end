@@ -1,6 +1,7 @@
 package ru.mirea.movieguide.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import ru.mirea.movieguide.exception.NotFoundException;
 import ru.mirea.movieguide.exception.PersistenceException;
 import ru.mirea.movieguide.model.User;
@@ -9,6 +10,7 @@ import ru.mirea.movieguide.repository.UserRepository;
 import java.util.UUID;
 
 @RequiredArgsConstructor
+@Component
 public class UserService {
     private final UserRepository userRepo;
 
@@ -17,9 +19,14 @@ public class UserService {
                 new NotFoundException("Пользователь " + username + " не найден!"));
     }
 
-    public User findUser(String userId) throws PersistenceException {
+    public User findUserById(String userId) throws PersistenceException {
         return userRepo.findById(userId).orElseThrow(() ->
                 new NotFoundException("Пользователь с идентификатором " + userId + " не найден!"));
+    }
+
+    public User findUserByUsername(String username) throws PersistenceException {
+        return userRepo.findByUsername(username).orElseThrow(() ->
+                new NotFoundException("Пользователь " + username + " не найден!"));
     }
 
     public User findTokenOwner(String refreshToken) throws PersistenceException {
