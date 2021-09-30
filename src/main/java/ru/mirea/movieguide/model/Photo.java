@@ -1,7 +1,9 @@
 package ru.mirea.movieguide.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -12,6 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
+@ToString(exclude = {"photoUri"})
 @Table(name = "photos")
 public class Photo {
     @Id
@@ -22,6 +25,7 @@ public class Photo {
     @Column(name = "photo_uri")
     @NotNull
     @NotEmpty
+    @JsonIgnore
     private String photoUri;
 
     @Transient

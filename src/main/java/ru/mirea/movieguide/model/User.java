@@ -1,5 +1,6 @@
 package ru.mirea.movieguide.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -29,6 +30,7 @@ public class User {
     @Column
     @NotNull(message = "Введите пароль!")
     @NotEmpty(message = "Введите пароль!")
+    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)

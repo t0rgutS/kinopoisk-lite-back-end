@@ -36,12 +36,12 @@ public class Movie {
 
     @JoinColumn(name = "age_rating_id")
     @NotNull(message = "Укажите возрастной рейтинг!")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     private AgeRating ageRating;
 
     @JoinColumn(name = "cover_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Photo photo;
+    @ManyToOne
+    private Photo cover;
 
     public Movie() {
         id = UUID.randomUUID().toString();

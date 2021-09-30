@@ -1,6 +1,7 @@
 package ru.mirea.movieguide.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.stream.Collectors;
@@ -44,10 +46,14 @@ public class JWTFilter extends GenericFilterBean {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     } catch (PersistenceException e) {
                         e.printStackTrace();
+                        ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
                     }
-                }
-            }
-        }
-        filterChain.doFilter(servletRequest, servletResponse);
+                } else ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            } else if (!((HttpServletRequest) servletRequest).getMethod().equals(HttpMethod.GET.name()))
+                ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        } else if (!((HttpServletRequest) servletRequest).getMethod().equals(HttpMethod.GET.name()))
+            ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
+        else
+            filterChain.doFilter(servletRequest, servletResponse);
     }
 }

@@ -37,13 +37,27 @@ public class MovieService {
     }
 
     public Movie get(String id) throws PersistenceException {
+        if (id == null)
+            throw new NotEnoughArgsException("Укажите идентификатор фильма!");
+        if (id.isEmpty())
+            throw new NotEnoughArgsException("Укажите идентификатор фильма!");
         Movie movie = movieRepo.findById(id).orElseThrow(() ->
                 new NotFoundException("Фильм с идентификатором " + id + " не найден!"));
         loadPoster(movie);
         return movie;
     }
 
-    @Secured("ADMIN")
+    public void delete(String id) throws PersistenceException {
+        if (id == null)
+            throw new NotEnoughArgsException("Укажите идентификатор фильма!");
+        if (id.isEmpty())
+            throw new NotEnoughArgsException("Укажите идентификатор фильма!");
+        Movie movie = movieRepo.findById(id).orElseThrow(() ->
+                new NotFoundException("Фильм с идентификатором " + id + " не найден!"));
+        movieRepo.delete(movie);
+    }
+
+
     public Movie upsert(Map<String, Object> request) throws PersistenceException {
         Movie movie;
         if (request.containsKey("id")) {
@@ -79,21 +93,22 @@ public class MovieService {
         }
         if (request.containsKey("description"))
             movie.setDescription(request.get("description").toString());
-        if (request.containsKey("photo")) {
-            Map<String, String> photo = (Map<String, String>) request.get("photo");
-            if (photo.containsKey("fileContent")) {
-                String filename = photo.containsKey("fileName")
-                        ? photo.get("fileName")
+        if (request.containsKey("cover")) {
+            Map<String, String> cover = (Map<String, String>) request.get("cover");
+            if (cover.containsKey("fileContent")) {
+                String filename = cover.containsKey("fileName")
+                        ? cover.get("fileName")
                         : String.format("image_%s.png", LocalDateTime.now().toString());
-                String path = String.format("%s/resources/static/images/%s", System.getProperty("user.dir"), filename);
+                String path = String.format("%s/src/main/resources/static/images/%s", System.getProperty("user.dir"), filename);
                 Photo storedPhoto = photoRepo.findByPhotoUri(path).orElse(null);
                 if (storedPhoto == null)
                     storedPhoto = new Photo();
-                byte[] fileContent = Base64.getDecoder().decode(photo.get("fileContent"));
+                byte[] fileContent = Base64.getDecoder().decode(cover.get("fileContent"));
                 try {
                     new FileOutputStream(path).write(fileContent);
                     storedPhoto.setPhotoUri(path);
                     photoRepo.save(storedPhoto);
+                    movie.setCover(storedPhoto);
                 } catch (IOException e) {
                     e.printStackTrace();
                     throw new PersistenceException("Ошибка сохранения постера: " + e.getMessage());
@@ -104,10 +119,10 @@ public class MovieService {
     }
 
     private void loadPoster(Movie movie) {
-        if (movie.getPhoto() != null) {
+        if (movie.getCover() != null) {
             try {
-                byte[] fileContent = Files.readAllBytes(Paths.get(movie.getPhoto().getPhotoUri()));
-                movie.getPhoto().setPhotoContent(Base64.getEncoder().encodeToString(fileContent));
+                byte[] fileContent = Files.readAllBytes(Paths.get(movie.getCover().getPhotoUri()));
+                movie.getCover().setPhotoContent(Base64.getEncoder().encodeToString(fileContent));
             } catch (IOException e) {
                 e.printStackTrace();
             }
