@@ -25,7 +25,7 @@ public class Photo {
     private String photoUri;
 
     @Transient
-    private byte[] photoContent;
+    private String photoContent;
 
     public Photo() {
         id = UUID.randomUUID().toString();

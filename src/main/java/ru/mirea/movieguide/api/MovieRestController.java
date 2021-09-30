@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,10 +24,8 @@ public class MovieRestController {
     public ResponseEntity<Map> getAll() {
         Map<String, Object> result = new HashMap<>();
         try {
-            result.put("content", movieService.getAll());
-            result.put("status", "OK");
+            result.put("Movies", movieService.getAll());
         } catch (Exception e) {
-            result.put("status", "ERROR");
             result.put("error", e.getMessage());
             return new ResponseEntity<Map>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -37,14 +36,11 @@ public class MovieRestController {
     public ResponseEntity<Map> get(@PathVariable String id) {
         Map<String, Object> result = new HashMap<>();
         try {
-            result.put("content", movieService.get(id));
-            result.put("status", "OK");
+            result.put("Movies", Collections.singletonList(movieService.get(id)));
         } catch (NotFoundException nfe) {
-            result.put("status", "ERROR");
             result.put("error", nfe.getMessage());
             return new ResponseEntity<Map>(result, HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            result.put("status", "ERROR");
             result.put("error", e.getMessage());
             return new ResponseEntity<Map>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -56,14 +52,14 @@ public class MovieRestController {
     public ResponseEntity<Map> upsertMovie(@RequestBody Map<String, String> request) {
         Map<String, Object> result = new HashMap<>();
         try {
-            result.put("entity", movieService.upsert(request));
-            result.put("status", "OK");
+            result.put("Movies", Collections.singletonList(movieService.upsert(request)));
+        } catch (NotFoundException nfe) {
+            result.put("error", nfe.getMessage());
+            return new ResponseEntity<Map>(result, HttpStatus.NOT_FOUND);
         } catch (PersistenceException pe) {
-            result.put("status", "ERROR");
             result.put("error", pe.getMessage());
             return new ResponseEntity<Map>(result, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            result.put("status", "ERROR");
             result.put("error", e.getMessage());
             return new ResponseEntity<Map>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
