@@ -32,6 +32,8 @@ public class JWTFilter extends GenericFilterBean {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
         String authHeader = ((HttpServletRequest) servletRequest).getHeader("Authorization");
+        boolean secured = securedPathRequested(((HttpServletRequest) servletRequest).getRequestURI(),
+                ((HttpServletRequest) servletRequest).getMethod());
         if (authHeader != null) {
             if (authHeader.startsWith("Bearer ")) {
                 String token = authHeader.substring(7);
@@ -44,16 +46,25 @@ public class JWTFilter extends GenericFilterBean {
                                         new SimpleGrantedAuthority("ROLE_" + role.getRole())).collect(Collectors.toList())
                         );
                         SecurityContextHolder.getContext().setAuthentication(authToken);
+                        filterChain.doFilter(servletRequest, servletResponse);
                     } catch (PersistenceException e) {
                         e.printStackTrace();
                         ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
                     }
                 } else ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
-            } else if (!((HttpServletRequest) servletRequest).getMethod().equals(HttpMethod.GET.name()))
+            } else if (secured)
                 ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
-        } else if (!((HttpServletRequest) servletRequest).getMethod().equals(HttpMethod.GET.name()))
+        } else if (secured)
             ((HttpServletResponse) servletResponse).sendError(HttpServletResponse.SC_UNAUTHORIZED);
         else
             filterChain.doFilter(servletRequest, servletResponse);
+    }
+
+    private boolean securedPathRequested(String path, String method) {
+        if (method.equals(HttpMethod.GET.name()))
+            return false;
+        if (path.matches("/api/auth(/\\w+)?"))
+            return false;
+        return true;
     }
 }
