@@ -9,3 +9,10 @@ spring:
    ddl-auto: update
 jwt:
  secret: f7JBW4ukc4HTqa9L
+oauth:
+ google:
+  token-url: https://oauth2.googleapis.com/token
+  user-info-url: https://www.googleapis.com/oauth2/v1/userinfo
+  id: 522113449269-9tbdnt6fr4ic7p4f60fgm19p905tvanp.apps.googleusercontent.com
+  secret: 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
+  redirect: http://localhost/api/oauth/google
