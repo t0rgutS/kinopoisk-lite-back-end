@@ -44,7 +44,7 @@ public class OAuthController {
             User user = userService.findById(userInfo.get("id"));
             if (user == null)
                 user = userService.createUser(userInfo.get("id"), userInfo.get("id"), "1234",
-                        userInfo.get("given_name"), userInfo.get("family_name"), true, null);
+                        userInfo.get("given_name"), userInfo.get("family_name"), true, User.Roles.ROLE_USER);
             Map<String, String> tokenResponse = jwtProvider.generateToken(user.getId());
             userService.setRefreshToken(user, tokenResponse.get("refreshToken"));
             return ResponseEntity.ok(tokenResponse);

@@ -14,7 +14,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 @RequiredArgsConstructor
 public class GoogleUserInfoProvider implements UserInfoProvider {
     private final ObjectMapper mapper;

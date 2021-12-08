@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component
 @RequiredArgsConstructor
 public class GoogleTokenProvider implements TokenProvider {
     private final ObjectMapper mapper;

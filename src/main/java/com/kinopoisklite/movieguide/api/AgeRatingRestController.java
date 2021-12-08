@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/api/AgeRatings")
+@RequestMapping(value = "/api/ageRatings")
 public class AgeRatingRestController {
     private final AgeRatingService ageRatingService;
 

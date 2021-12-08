@@ -7,5 +7,5 @@ import java.util.Optional;
 
 
 public interface PhotoRepository extends JpaRepository<Photo, String> {
-    Optional<Photo> findByPhotoUri(String photoUri);
+    Optional<Photo> findByUri(String photoUri);
 }

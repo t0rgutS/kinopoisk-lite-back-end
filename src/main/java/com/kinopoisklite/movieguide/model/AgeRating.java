@@ -17,7 +17,7 @@ import java.util.UUID;
 @Table(name = "age_ratings")
 public class AgeRating {
     @Id
-   // @GeneratedValue(strategy = GenerationType.AUTO)
+    // @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "age_rating_id")
     private String id;
 
@@ -33,6 +33,12 @@ public class AgeRating {
 
     public AgeRating() {
         id = UUID.randomUUID().toString();
+    }
+
+    public AgeRating(String ratingCategory, Integer minAge) {
+        this.id = UUID.randomUUID().toString();
+        this.ratingCategory = ratingCategory;
+        this.minAge = minAge;
     }
 
 }

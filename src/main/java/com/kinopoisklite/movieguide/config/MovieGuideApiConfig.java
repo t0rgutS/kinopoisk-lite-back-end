@@ -38,7 +38,7 @@ public class MovieGuideApiConfig {
         return new GoogleUserInfoProvider(objectMapper, restTemplate);
     }
 
-    @Bean
+   /* @Bean
     public TokenProviderPool tokenProviderPool(BeanFactory beanFactory) {
         return new TokenProviderPool(beanFactory);
     }
@@ -46,5 +46,5 @@ public class MovieGuideApiConfig {
     @Bean
     public UserInfoProviderPool userInfoProviderPool(BeanFactory beanFactory) {
         return new UserInfoProviderPool(beanFactory);
-    }
+    }*/
 }

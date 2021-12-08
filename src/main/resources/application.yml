@@ -1,12 +1,11 @@
 spring:
- datasource:
-  url: jdbc:postgresql://localhost/KinopoiskLite_Base
-  username: putur
-  password: fxaPaMz4RMsYghZF
- jpa:
-  generate-ddl: true
-  hibernate:
-   ddl-auto: update
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: fred
+    password: MrB@dGu1
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
 jwt:
  secret: f7JBW4ukc4HTqa9L
 oauth:

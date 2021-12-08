@@ -2,6 +2,7 @@ package com.kinopoisklite.movieguide.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -10,10 +11,12 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
-@ToString(exclude = "password")
+@NoArgsConstructor
+@ToString(exclude = {"password", "favMovies", "refreshToken"})
 @Entity
 @Table(name = "users")
 public class User {
@@ -43,16 +46,28 @@ public class User {
     private Boolean external;
 
     @Column(name = "refresh_token")
+    @JsonIgnore
     private String refreshToken;
 
     @Column
     @NotNull
     private Roles role;
 
-    @Transient
+    @ElementCollection
+    @JsonIgnore
     private List<String> favMovies = new ArrayList<>();
 
     public enum Roles {
         ROLE_USER, ROLE_MODER, ROLE_ADMIN
+    }
+
+    public User(String login, String password, String firstName, String lastName, Boolean external, Roles role) {
+        this.id = UUID.randomUUID().toString();
+        this.login = login;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.external = external;
+        this.role = role;
     }
 }
