@@ -41,7 +41,7 @@ public class GoogleTokenProvider implements TokenProvider {
             HttpEntity response = restTemplate.exchange(url, HttpMethod.POST, null, Map.class);
             return mapper.convertValue(response.getBody(), Map.class);
         } catch (HttpStatusCodeException e) {
-            //TODO exception handling
+            e.printStackTrace();
         }
         return new HashMap<>();
     }

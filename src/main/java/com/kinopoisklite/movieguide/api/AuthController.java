@@ -26,6 +26,11 @@ public class AuthController {
     @Resource(name = "passwordEncoder")
     private BCryptPasswordEncoder passwordEncoder;
 
+    @PostMapping("/touch")
+    public ResponseEntity<?> touch() {
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/me")
     public ResponseEntity<Map> getUserInfo(@RequestHeader(name = "Authorization") String auth) {
         if (!auth.startsWith("Bearer "))

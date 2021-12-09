@@ -35,8 +35,8 @@ public class AgeRating {
         id = UUID.randomUUID().toString();
     }
 
-    public AgeRating(String ratingCategory, Integer minAge) {
-        this.id = UUID.randomUUID().toString();
+    public AgeRating(String id, String ratingCategory, Integer minAge) {
+        this.id = id;
         this.ratingCategory = ratingCategory;
         this.minAge = minAge;
     }

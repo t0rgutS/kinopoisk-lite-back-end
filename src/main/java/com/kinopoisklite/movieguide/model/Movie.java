@@ -59,9 +59,9 @@ public class Movie {
         this.id = uuid;
     }
 
-    public Movie(String title, Integer releaseYear, Integer duration, String country, String genre,
+    public Movie(String id, String title, Integer releaseYear, Integer duration, String country, String genre,
                  String description, AgeRating rating, Photo cover) {
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
         this.title = title;
         this.releaseYear = releaseYear;
         this.duration = duration;

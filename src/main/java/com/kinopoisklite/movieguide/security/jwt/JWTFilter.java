@@ -60,7 +60,7 @@ public class JWTFilter extends GenericFilterBean {
     private boolean securedPathRequested(String path, String method) {
         if (method.equals(HttpMethod.GET.name()))
             return false;
-        if (path.matches("/api/o?auth(.+)?"))
+        if (path.matches("/api/o?auth(.+)?") && !path.endsWith("touch"))
             return false;
         return true;
     }

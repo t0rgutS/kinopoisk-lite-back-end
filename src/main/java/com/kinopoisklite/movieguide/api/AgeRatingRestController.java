@@ -18,19 +18,18 @@ public class AgeRatingRestController {
     private final AgeRatingService ageRatingService;
 
     @GetMapping
-    public ResponseEntity<Map> getAll() {
+    public ResponseEntity<Object> getAll() {
         try {
-            return ResponseEntity.ok().body(Collections.singletonMap("ageRatings", ageRatingService.getAll()));
+            return ResponseEntity.ok().body( ageRatingService.getAll());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(Collections.singletonMap("message", e.getMessage()));
         }
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<Map> get(String id) {
+    public ResponseEntity<Object> get(String id) {
         try {
-            return ResponseEntity.ok().body(Collections.singletonMap("movie",
-                    ageRatingService.get(id)));
+            return ResponseEntity.ok().body(ageRatingService.get(id));
         } catch (PersistenceException pe) {
             return ResponseEntity.badRequest().body(Collections.singletonMap("message", pe.getMessage()));
         } catch (Exception e) {

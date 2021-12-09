@@ -32,7 +32,9 @@ public class MovieService {
     private final PhotoRepository coverRepo;
 
     public List<Movie> findAll() {
-        return movieRepo.findAll();
+        List<Movie> movies = movieRepo.findAll();
+        movies.forEach(this::loadPoster);
+        return movies;
     }
 
     public Movie findById(String id) throws PersistenceException {
@@ -43,7 +45,9 @@ public class MovieService {
     }
 
     public List<Movie> findByIds(List<String> ids) {
-        return movieRepo.findByIdIn(ids);
+        List<Movie> movies = movieRepo.findByIdIn(ids);
+        movies.forEach(this::loadPoster);
+        return movies;
     }
 
     public void delete(String id) throws PersistenceException {

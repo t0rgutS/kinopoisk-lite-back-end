@@ -61,8 +61,8 @@ public class User {
         ROLE_USER, ROLE_MODER, ROLE_ADMIN
     }
 
-    public User(String login, String password, String firstName, String lastName, Boolean external, Roles role) {
-        this.id = UUID.randomUUID().toString();
+    public User(String id, String login, String password, String firstName, String lastName, Boolean external, Roles role) {
+        this.id = id;
         this.login = login;
         this.password = password;
         this.firstName = firstName;
