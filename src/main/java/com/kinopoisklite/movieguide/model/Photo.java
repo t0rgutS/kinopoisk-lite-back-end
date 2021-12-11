@@ -23,7 +23,6 @@ import java.util.UUID;
 @Table(name = "photos")
 public class Photo {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "photo_id")
     private String id;
 

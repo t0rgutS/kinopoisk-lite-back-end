@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
@@ -16,7 +14,6 @@ import java.util.UUID;
 @Table(name = "movies")
 public class Movie {
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "movie_id")
     private String id;
 

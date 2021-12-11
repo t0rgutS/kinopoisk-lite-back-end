@@ -17,7 +17,6 @@ import java.util.UUID;
 @Table(name = "age_ratings")
 public class AgeRating {
     @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "age_rating_id")
     private String id;
 

@@ -5,6 +5,8 @@ import com.kinopoisklite.movieguide.exception.UserAlreadyExistsException;
 import com.kinopoisklite.movieguide.model.User;
 import com.kinopoisklite.movieguide.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,10 @@ import java.util.UUID;
 @Component
 public class UserService {
     private final UserRepository userRepo;
-    private final BCryptPasswordEncoder encoder;
+
+    @Lazy
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     public User findById(String userId) {
         return userRepo.findById(userId).orElse(null);

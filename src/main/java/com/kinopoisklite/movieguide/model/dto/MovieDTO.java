@@ -1,6 +1,5 @@
 package com.kinopoisklite.movieguide.model.dto;
 
-import com.kinopoisklite.movieguide.model.AgeRating;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
