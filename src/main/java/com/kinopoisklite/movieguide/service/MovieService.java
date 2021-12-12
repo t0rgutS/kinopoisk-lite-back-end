@@ -105,12 +105,13 @@ public class MovieService {
                 } else
                     path = String.format("%s/src/main/resources/static/images/%s",
                             System.getProperty("user.dir"),
-                            String.format("image_%s.png", LocalDateTime.now().toString()));
+                            String.format("image_%s.png", Instant.now().toEpochMilli()));
                 Photo cover = new Photo();
                 byte[] fileContent = Base64.getDecoder().decode(coverData.getContent());
                 try {
                     new FileOutputStream(path).write(fileContent);
                     cover.setUri(path);
+                    cover.setContent(coverData.getContent());
                     coverRepo.save(cover);
                     movie.setCover(cover);
                 } catch (IOException e) {
@@ -119,7 +120,8 @@ public class MovieService {
                 }
             } else throw new NotEnoughArgsException("Приложите постер!");
         }
-        return movieRepo.save(movie);
+        movieRepo.save(movie);
+        return movie;
     }
 
     private void loadPoster(Movie movie) {
