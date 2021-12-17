@@ -11,18 +11,19 @@ import com.kinopoisklite.movieguide.repository.AgeRatingRepository;
 import com.kinopoisklite.movieguide.repository.MovieRepository;
 import com.kinopoisklite.movieguide.repository.PhotoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 @Component
@@ -94,16 +95,14 @@ public class MovieService {
             if (coverData.getContent() != null) {
                 String path;
                 if (coverData.getFileName() != null) {
-                    path = String.format("%s/src/main/resources/static/images/%s",
-                            System.getProperty("user.dir"),
-                            coverData.getFileName());
+                    path = String.format("%s/images/%s", System.getProperty("user.dir"), coverData.getFileName());
                     if (coverRepo.findByUri(path).orElse(null) != null) {
-                        path = String.format("%s/src/main/resources/static/images/%s",
+                        path = String.format("%s/images/%s",
                                 System.getProperty("user.dir"),
                                 String.format("image_%s.png", Instant.now().toEpochMilli()));
                     }
                 } else
-                    path = String.format("%s/src/main/resources/static/images/%s",
+                    path = String.format("%s/images/%s",
                             System.getProperty("user.dir"),
                             String.format("image_%s.png", Instant.now().toEpochMilli()));
                 Photo cover = new Photo();

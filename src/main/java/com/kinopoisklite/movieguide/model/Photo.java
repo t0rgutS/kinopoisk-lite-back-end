@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import lombok.ToString;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
@@ -41,17 +43,13 @@ public class Photo {
 
     public Photo(String filename) {
         this.id = UUID.randomUUID().toString();
-        this.uri = String.format("%s/src/main/resources/static/images/%s",
-                System.getProperty("user.dir"),
-                filename);
+        this.uri = String.format("%s/images/%s", System.getProperty("user.dir"), filename);
     }
 
     @SneakyThrows
     public Photo(String filename, String photoContent) {
         this.id = UUID.randomUUID().toString();
-        this.uri = String.format("%s/src/main/resources/static/images/%s",
-                System.getProperty("user.dir"),
-                filename);
+        this.uri = String.format("%s/images/%s", System.getProperty("user.dir"), filename);
         byte[] fileContent = Base64.getDecoder().decode(photoContent);
         try {
             new FileOutputStream(this.uri).write(fileContent);
